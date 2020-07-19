@@ -9,6 +9,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-lines-ellipsis": "^0.14.1",
     "react-scripts": "3.4.1"
   },
   "scripts": {
@@ -31,5 +32,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage": "http://100dongwoo.github.io/movie_react"
 }

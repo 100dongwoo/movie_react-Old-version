@@ -1,44 +1,63 @@
-//15강 한번더봐보기
+//15 17강 한번더봐보기
 import React, {Component} from 'react';
-//import logo from './logo.svg';
-import './App.css';
-import './Movie'
+import "./App.css";
+import "./index.css"
 import Movie from "./Movie";
 
 class App extends Component {
-    state = {
-
-    }
+    state = {}
 // componentDidMount() {
 // setTimeout(function (){
 //     console.log("hello:")
 // },1000 )
 // }
     componentDidMount() {
-        fetch('https://yts.mx/api/v2/list_movies.json?sort_by=rating')
-        //fetch url 에이젝스로 바꿀수있다 쉽게
-            .then(response=>response.json())
-            .then(json=>console.log(json))
-            .catch(err=>console.log(err))
-        // console.log(fetch('anime_api'))
-//respone으로체크로 하고 제이슨으로 변환하고 콘솔로 보는방식으로 한다 ,ㄴ
+        this._getMovies();
     }
 
-    _renderMovies=()=>{
-      // const movies=[<Movie props/>,<Movie props/>]
-        const movies= this.state.movies.map((movie, index) => {
-            return <Movie title={movie.title} poster={movie.poster} key={index}/>
+    _renderMovies = () => {
+
+        const movies = this.state.movies.map((movie) => {
+            console.log(movie)
+            return <Movie title={movie.title_english}
+                          poster={movie.medium_cover_image}
+                          key={movie.id}
+                          genres={movie.genres}
+                          synopsis={movie.synopsis}
+            />
         })
-        return movies;
+        return movies
+    }
+
+
+    _getMovies = async () => {  //비동기 이전작업끝나기전에 다음작업도하는거
+        const movies = await this._callApi()
+        this.setState({
+            movies
+        })
+    }
+
+//awaiㅅ callapi가 끝나기를 기달리는거 just기달리기 성공x
+
+
+    _callApi = () => {
+        return fetch('https://yts.mx/api/v2/list_movies.json?sort_by=download_count')
+            .then(response => response.json())
+            .then(json => json.data.movies)
+            .catch(err => console.log(err))
     }
 
     render() {
+        const {movies}=this.state;          //???
         return (
-            <div className="App">
+            <div><h1>영화 다운로드 수   </h1>
+            <div className={movies ? "App" : "App--loading"}>
+                {/*//있나없나 하는거*/}
+
                 {
-                    this.state.movies ? this._renderMovies():'Loading'
+                    this.state.movies ? this._renderMovies() : '  Loading'
                 }
-            </div>
+            </div></div>
         )
     }
 
