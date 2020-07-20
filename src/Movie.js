@@ -28,6 +28,7 @@ import LinesEllipsis from 'react-lines-ellipsis'
 //     }
 //
 // }
+//
 
 function Movie({title, poster,genres,synopsis}) {
     return (
